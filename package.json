@@ -1,0 +1,8 @@
+{
+  "name": "plugsheet",
+  "version": "0.0.1",
+  "description": "plugsheet data handoff server",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
