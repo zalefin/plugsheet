@@ -6,9 +6,7 @@ const fs = require('fs');
 
 app.get('/update', function(req, res){
   console.log('update');
-  // tabledata = "column1,column2,column3\na,b,c\ne,f,g"
   res.sendStatus(200);
-  // io.emit('update', tabledata);
   var raw = fs.readFileSync('housing.json')
   io.emit('update', JSON.stringify(JSON.parse(raw)));
 })
