@@ -1,14 +1,14 @@
-var app = require('express')();
+var express = require('express');
+var app = express();
 var http = require('http').createServer(app);
 var io = require('socket.io')(http);
 const fs = require('fs');
 
+app.use(express.json());
 
-app.get('/update', function(req, res){
-  console.log('update');
+app.post('/update', function(req, res){
   res.sendStatus(200);
-  var raw = fs.readFileSync('housing.json')
-  io.emit('update', JSON.stringify(JSON.parse(raw)));
+  io.emit('update', JSON.stringify(req.body));
 })
 
 app.get('/', function(req, res){
