@@ -24,22 +24,35 @@
             return out;
         }
 
-        var table = new Tabulator("#table", {placeholder:"Waiting for update.", height:"98vh", layout:"fitColumns", autoColumns: true});
+        var table = new Tabulator("#table", {
+            placeholder:"Waiting for update.",
+            height:"98vh",
+            layout:"fitColumns",
+            autoColumns: true,
+            scrollVertical:function(){
+                update_colors();
+            }
+        });
 
-        var socket = io();
-        socket.on('update', function(data){
-            // load data into table
-            data = JSON.parse(data);
-            table.setData(data.data);
+        var data;
+
+        function update_colors(){
             // map cell color data
             var rows = table.getRows();
             for(var i = 0; i < rows.length; i++){
                 var cells = rows[i].getCells();
                 for(var j = 0; j < cells.length; j++){
                     cells[j].getElement().style["background-color"] = data.colors[i.toString() + "," + j.toString()];
-
                 }
             }
+        }
+
+        var socket = io();
+        socket.on('update', function(d){
+            // load data into table
+            data = JSON.parse(d);
+            table.setData(data.data);
+            update_colors();
         });
 
     </script>
